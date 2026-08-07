@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Animated feature timeline, 1993–2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#111214;
+    --sprocket:#0a0a0b;
+    --paper:#EFE9DC;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--canvas);}
+  body{
+    font-family:'JetBrains Mono',monospace;
+    padding:28px 28px 40px;
+  }
+  .masthead{
+    color:var(--paper);
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .masthead .kicker{
+    font-size:11px;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:#8a8a84;
+    margin:0 0 6px;
+  }
+  .masthead h1{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    font-size:clamp(28px,4vw,44px);
+    letter-spacing:.02em;
+    margin:0;
+    color:var(--paper);
+  }
+  .filmstrip{
+    display:flex;
+    justify-content:space-between;
+    padding:0 2px;
+    margin:14px 0 10px;
+  }
+  .filmstrip span{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--canvas);
+    border:1.5px solid #4a4a46;
+  }
+  .reel{
+    background:var(--sprocket);
+    padding:14px 14px 4px;
+    border-radius:4px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+  }
+  .cell{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:3px;
+    overflow:hidden;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .poster-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+  }
+  .cell .num,
+  .cell .title,
+  .cell .sub{
+    position:relative;
+    z-index:1;
+  }
+  .cell.has-photo .num,
+  .cell.has-photo .title,
+  .cell.has-photo .sub{
+    text-shadow:0 1px 3px rgba(0,0,0,.7);
+  }
+  .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.05em;
+    opacity:.85;
+  }
+  .title{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    font-size:14px;
+    line-height:1.08;
+    letter-spacing:.01em;
+  }
+  .sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:8.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    opacity:.8;
+    margin-top:3px;
+  }
+  .footer{
+    text-align:center;
+    color:#6f6f6a;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    margin-top:16px;
+  }
+  @media (max-width:640px){
+    .grid{grid-template-columns:repeat(4,1fr);}
+    .title{font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="kicker">A chronology of clay, pixels and plasticine &middot; 1993&ndash;2024</p>
+  <h1>The animated feature wall</h1>
+</div>
+
+<div class="filmstrip">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<div class="reel">
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="filmstrip" style="margin-top:10px;">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<p class="footer">30 features, one shelf</p>
+
+<script>
+const films = [
+  {n:1,t:"The Wrong Trousers",y:"1993",bg:"#8A5A34",fg:"#F3E6D2"},
+  {n:2,t:"A Close Shave",y:"1995",bg:"#93602F",fg:"#F3E6D2"},
+  {n:3,t:"Shrek",y:"2001",bg:"#4F7A3A",fg:"#F1F5E6"},
+  {n:4,t:"Monsters, Inc.",y:"2001",bg:"#241F52",fg:"#D9CFF7"},
+  {n:5,t:"The Incredibles",y:"2004",bg:"#A62F28",fg:"#F6E2C8"},
+  {n:6,t:"Curse of the Were-Rabbit",y:"2005",bg:"#6E4A28",fg:"#F3E6D2"},
+  {n:7,t:"Ratatouille",y:"2007",bg:"#B8452A",fg:"#F6E9D6"},
+  {n:8,t:"Bolt",y:"2008",bg:"#1E5EA8",fg:"#E4EFFA"},
+  {n:9,t:"A Matter of Loaf and Death",y:"2008",bg:"#5F3E20",fg:"#F3E6D2"},
+  {n:10,t:"Up",y:"2009",bg:"#2E7D7D",fg:"#EAF6F2"},
+  {n:11,t:"How to Train Your Dragon",y:"2010",bg:"#1B3A4B",fg:"#DCEAF2"},
+  {n:12,t:"Despicable Me",y:"2010",bg:"#F0C419",fg:"#2A2210"},
+  {n:13,t:"The Adventures of Tintin",y:"2011",bg:"#B98A4F",fg:"#2A1E0E"},
+  {n:14,t:"Hotel Transylvania",y:"2012",bg:"#4A2B63",fg:"#EAD9F2"},
+  {n:15,t:"Despicable Me 2",y:"2013",bg:"#F2C744",fg:"#2A2210"},
+  {n:16,t:"Frozen",y:"2013",bg:"#7EC8E3",fg:"#0E3A4A"},
+  {n:17,t:"The Lego Movie",y:"2014",bg:"#D62828",fg:"#FCEBC8"},
+  {n:18,t:"Big Hero 6",y:"2014",bg:"#B8352A",fg:"#F3E2CC"},
+  {n:19,t:"How to Train Your Dragon 2",y:"2014",bg:"#12384A",fg:"#D8E7EF"},
+  {n:20,t:"Mr. Peabody and Sherman",y:"2014",bg:"#3D5A80",fg:"#E4ECF5"},
+  {n:21,t:"Inside Out",y:"2015",bg:"#FFC72C",fg:"#2A2210"},
+  {n:22,t:"Minions",y:"2015",bg:"#F5C518",fg:"#2A2210"},
+  {n:23,t:"Home",y:"2015",bg:"#7B4FA3",fg:"#EEE3F5"},
+  {n:24,t:"Shaun the Sheep Movie",y:"2015",bg:"#6B8E4E",fg:"#F1F1E4"},
+  {n:25,t:"Zootopia",y:"2016",bg:"#2E86AB",fg:"#E4F1F7"},
+  {n:26,t:"The Secret Life of Pets",y:"2016",bg:"#EFA23B",fg:"#3A2308"},
+  {n:27,t:"Despicable Me 3",y:"2017",bg:"#F5B700",fg:"#2A2210"},
+  {n:28,t:"Frozen 2",y:"2019",bg:"#3A5A78",fg:"#DCE7F0"},
+  {n:29,t:"Minions: The Rise of Gru",y:"2022",bg:"#C9622A",fg:"#F7E4CE"},
+  {n:30,t:"Despicable Me 4",y:"2024",bg:"#F7C325",fg:"#2A2210"}
+];
+
+const grid = document.getElementById('grid');
+films.forEach(f=>{
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.style.background = f.bg;
+  cell.style.color = f.fg;
+  cell.innerHTML = `
+    <img class="poster-img" src="poster-${f.n}.jpg" alt="" style="display:none;">
+    <div class="num">${String(f.n).padStart(2,'0')}</div>
+    <div>
+      <div class="title">${f.t}</div>
+      <div class="sub">${f.y}</div>
+    </div>
+  `;
+  const img = cell.querySelector('.poster-img');
+  img.onload = () => {
+    img.style.display = 'block';
+    cell.classList.add('has-photo');
+  };
+  img.onerror = () => {
+    img.remove();
+  };
+  grid.appendChild(cell);
+});
+</script>
+
+</body>
+</html>
