@@ -87,6 +87,19 @@
   .cell.has-photo .title,
   .cell.has-photo .sub{
     text-shadow:0 1px 3px rgba(0,0,0,.7);
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .cell.has-photo .poster-img{
+    transition:opacity .2s ease;
+  }
+  .cell.has-photo:hover .num,
+  .cell.has-photo:hover .title,
+  .cell.has-photo:hover .sub{
+    opacity:1;
+  }
+  .cell.has-photo:hover .poster-img{
+    opacity:.55;
   }
   .num{
     font-family:'JetBrains Mono',monospace;
@@ -187,7 +200,7 @@ films.forEach(f=>{
   cell.style.color = f.fg;
   cell.innerHTML = `
     <img class="poster-img" src="poster-${f.n}.jpg" alt="" style="display:none;">
-    <div class="num">${String(f.n).padStart(2,'0')}</div>
+    <div></div>
     <div>
       <div class="title">${f.t}</div>
       <div class="sub">${f.y}</div>
