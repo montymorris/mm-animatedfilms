@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Animated feature timeline, 1993–2024</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,8 +133,15 @@
     margin-top:16px;
   }
   @media (max-width:640px){
-    .grid{grid-template-columns:repeat(4,1fr);}
-    .title{font-size:12px;}
+    body{padding:16px 12px 28px;}
+    .grid{grid-template-columns:repeat(3,1fr);gap:6px;}
+    .reel{padding:10px 10px 4px;}
+    .cell{padding:7px;}
+    .title{font-size:10.5px;}
+    .sub{font-size:7.5px;}
+    .masthead h1{font-size:22px;}
+    .masthead .kicker{font-size:9px;}
+    .filmstrip span{width:6px;height:6px;}
   }
 </style>
 </head>
