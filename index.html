@@ -221,6 +221,13 @@ films.forEach(f=>{
   img.onerror = () => {
     img.remove();
   };
+  cell.addEventListener('click', () => {
+    window.open(
+      'https://www.google.com/search?q=' + encodeURIComponent(`${f.t} ${f.y}`),
+      '_blank',
+      'noopener'
+    );
+  });
   grid.appendChild(cell);
 });
 </script>
